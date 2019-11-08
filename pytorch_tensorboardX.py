@@ -4,7 +4,20 @@
 Created on Wed Nov  6 20:37:05 2019
 
 @author: lvbo
+I copy this file from somewhere else
+Some error occured during the test,so i tried to reconstruct the version of my anaconda env.And this installation tested pass:
+torchvision               0.4.0
+tensorboard               1.13.0                       
+tensorboardx              1.9    
+tensorflow                2.0.0               
+tensorflow-base           2.0.0               
+tensorflow-estimator      2.0.0
+pytorch                   1.2.0
+torchvision               0.4.0
+
+U can see some basic installation instruct from : https://github.com/lanpa/tensorboardX  
 """
+
 
 import torch
 import torch.nn as nn
@@ -32,7 +45,7 @@ class LeNet(nn.Module):
         )
         self.fc3 = nn.Linear(84, 10)
  
-    # 定义前向传播过程，输入为x
+    # 定义前向传播过程，输入为x,由这个前向传播过程决定网络结构,必须定义
     def forward(self, x):
         x = self.conv1(x)
         x = self.conv2(x)
@@ -43,8 +56,11 @@ class LeNet(nn.Module):
         x = self.fc3(x)
         return x
 
-dummy_input = torch.rand(13, 1, 28, 28) #假设输入13张1*28*28的图片
+dummy_input = torch.rand(13, 1, 28, 28) #假设输入13张1*28*28的图片，the dummy input dimension should be the same as the input dimension defined in forward
 model = LeNet()
 writer=SummaryWriter(comment='LeNet') 
 writer.add_graph(model, (dummy_input, ))
 writer.close()
+
+#tensorboard --logdir=./runs
+#open browser ,type  http://localhost:6006/   enjoy it
